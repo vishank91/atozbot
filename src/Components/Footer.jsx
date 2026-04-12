@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function Footer() {
@@ -11,6 +11,27 @@ export default function Footer() {
     linkedin: import.meta.env.VITE_APP_LINKEDIN,
     youtube: import.meta.env.VITE_APP_YOUTUBE
   })
+
+  useEffect(() => {
+    (async () => {
+      let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/setting`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      response = await response.json()
+      setSettingData({
+        ...settingData,
+        siteName: response.data.siteName || settingData.siteName,
+        facebook: response.data.facebook || settingData.facebook,
+        twitter: response.data.twitter || settingData.twitter,
+        linkedin: response.data.linkedin || settingData.linkedin,
+        instagram: response.data.instagram || settingData.instagram,
+        youtube: response.data.youtube || settingData.youtube
+      })
+    })()
+  }, [])
   return (
     <footer className="footer-area footer-eleven bg-dark">
       <div className="footer-top">

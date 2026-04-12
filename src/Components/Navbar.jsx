@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 
 export default function Navbar() {
@@ -13,6 +13,27 @@ export default function Navbar() {
     youtube: import.meta.env.VITE_APP_YOUTUBE
   })
   let [showSidebar, setShowSidebar] = useState(false)
+
+  useEffect(() => {
+    (async () => {
+      let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/setting`, {
+        method: 'GET',
+        headers: {
+          'content-type': 'application/json'
+        }
+      })
+      response = await response.json()
+      setSettingData({
+        ...settingData,
+        siteName: response.data.siteName || settingData.siteName,
+        facebook: response.data.facebook || settingData.facebook,
+        twitter: response.data.twitter || settingData.twitter,
+        linkedin: response.data.linkedin || settingData.linkedin,
+        instagram: response.data.instagram || settingData.instagram,
+        youtube: response.data.youtube || settingData.youtube
+      })
+    })()
+  }, [])
   return (
     <>
       <section className="navbar-area navbar-nine">

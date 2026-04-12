@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 export default function ContactUs() {
@@ -15,6 +15,32 @@ export default function ContactUs() {
         linkedin: import.meta.env.VITE_APP_LINKEDIN,
         youtube: import.meta.env.VITE_APP_YOUTUBE
     })
+
+    useEffect(() => {
+        (async () => {
+            let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/setting`, {
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json'
+                }
+            })
+            response = await response.json()
+            setSettingData({
+                ...settingData,
+                address: response.data.address || settingData.address,
+                map1: response.data.map1 || settingData.map1,
+                map2: response.data.map2 || settingData.map2,
+                email: response.data.email || settingData.email,
+                phone: response.data.phone || settingData.phone,
+                whatsapp: response.data.whatsapp || settingData.whatsapp,
+                facebook: response.data.facebook || settingData.facebook,
+                twitter: response.data.twitter || settingData.twitter,
+                linkedin: response.data.linkedin || settingData.linkedin,
+                instagram: response.data.instagram || settingData.instagram,
+                youtube: response.data.youtube || settingData.youtube
+            })
+        })()
+    }, [])
     return (
         <>
             <section id="contact" className="contact-section">
@@ -144,9 +170,9 @@ export default function ContactUs() {
             </section>
 
             <section className="map-section map-style-9">
-              <div className='w-100'>
-                 <iframe className='w-100' height={500} src={import.meta.env.VITE_APP_MAP2} frameborder="0"></iframe>
-              </div>
+                <div className='w-100'>
+                    <iframe className='w-100' height={500} src={import.meta.env.VITE_APP_MAP2} frameborder="0"></iframe>
+                </div>
             </section >
         </>
 
