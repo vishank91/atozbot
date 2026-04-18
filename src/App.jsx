@@ -22,6 +22,8 @@ import FeaturePage from './Pages/FeaturePage'
 import PricingPage from './Pages/PricingPage'
 import FaqPage from './Pages/FaqPage'
 import ContactUsPage from './Pages/ContactUsPage'
+import PrivacyPolicyPage from './Pages/PrivacyPolicyPage'
+import TermsAndConditionPage from './Pages/TermsAndConditionPage'
 
 
 export default function App() {
@@ -35,6 +37,8 @@ export default function App() {
         <Route path='/pricing' element={<PricingPage />} />
         <Route path='/faq' element={<FaqPage />} />
         <Route path='contactus' element={<ContactUsPage />} />
+        <Route path='privacy' element={<PrivacyPolicyPage />} />
+        <Route path='tc' element={<TermsAndConditionPage />} />
 
         {/* Admin Routes */}
         <Route path='/admin' element={<AdminHomePage />} />
