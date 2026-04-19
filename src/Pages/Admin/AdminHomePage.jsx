@@ -1,7 +1,29 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Sidebar from '../../Components/Admin/Sidebar'
 
 export default function AdminHomePage() {
+  let [data, setData] = useState([])
+
+  useEffect(() => {
+    (async () => {
+      try {
+        let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/user/${localStorage.getItem("userid")}`, {
+          method: "GET",
+          headers: {
+            "content-type": "application/json"
+          }
+        })
+        response = await response.json()
+        if (response.result === "Done")
+          setData(response.data)
+        else {
+          alert(response.reason)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    })()
+  }, [])
   return (
     <>
       <section className="breadcrum">
@@ -15,28 +37,24 @@ export default function AdminHomePage() {
               <table className='table table-bordered'>
                 <tbody>
                   <tr>
-                    <th>Id</th>
-                    <td>111</td>
-                  </tr>
-                  <tr>
                     <th>Name</th>
-                    <td>Nitin Chauhan</td>
+                    <td>{data.name}</td>
                   </tr>
                   <tr>
                     <th>Username</th>
-                    <td>nitin</td>
+                    <td>{data.username}</td>
                   </tr>
                   <tr>
                     <th>Email</th>
-                    <td>vishankchauhan@gmail.com</td>
+                    <td>{data.email}</td>
                   </tr>
                   <tr>
                     <th>Phone</th>
-                    <td>9873848046</td>
+                    <td>{data.phone}</td>
                   </tr>
                   <tr>
                     <th>Role</th>
-                    <td>Super Admin</td>
+                    <td>{data.role}</td>
                   </tr>
                 </tbody>
               </table>

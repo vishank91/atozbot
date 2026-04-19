@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 
 export default function Navbar() {
+  let navigate = useNavigate()
   let [settingData, setSettingData] = useState({
     logo: import.meta.env.VITE_APP_LOGO,
     logoWhite: import.meta.env.VITE_APP_LOGO_WHITE,
@@ -13,6 +14,11 @@ export default function Navbar() {
     youtube: import.meta.env.VITE_APP_YOUTUBE
   })
   let [showSidebar, setShowSidebar] = useState(false)
+
+  function logout() {
+    localStorage.clear()
+    navigate("/login")
+  }
 
   useEffect(() => {
     (async () => {
@@ -57,13 +63,36 @@ export default function Navbar() {
                     <li className="nav-item"><NavLink className="page-scroll" to="/about">About</NavLink></li>
                     <li className="nav-item"><NavLink className="page-scroll" to="/feature">Feature</NavLink></li>
                     <li className="nav-item"><NavLink className="page-scroll" to="/pricing">Pricing</NavLink></li>
-                    <li className="nav-item"><NavLink className="page-scroll" to="/text">Text</NavLink></li>
-                    <li className="nav-item"><NavLink className="page-scroll" to="/image">Image</NavLink></li>
-                    <li className="nav-item"><NavLink className="page-scroll" to="/video">Video</NavLink></li>
-                    <li className="nav-item"><NavLink className="page-scroll" to="/music">Music</NavLink></li>
-                    <li className="nav-item"><NavLink className="page-scroll" to="/speech">Speech</NavLink></li>
                     <li className="nav-item"><NavLink className="page-scroll" to="/faq">Faq</NavLink></li>
                     <li className="nav-item"><NavLink className="page-scroll" to="/contactus">ContactUs</NavLink></li>
+                    <li className="nav-item">
+                      <div className="dropdown">
+                        <a className="page-scroll" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          Generation
+                        </a>
+                        <ul className="dropdown-menu">
+                          <li><Link className="text-dark" style={{ margin: "0" }} to="/text">Text to Text</Link></li>
+                          <li><Link className="text-dark" style={{ margin: "0" }} to="/image">Text to Image</Link></li>
+                          <li><Link className="text-dark" style={{ margin: "0" }} to="/video">Text to Video</Link></li>
+                          <li><Link className="text-dark" style={{ margin: "0" }} to="/music">Text to Music</Link></li>
+                          <li><Link className="text-dark" style={{ margin: "0" }} to="/speech">Text to Speech</Link></li>
+                        </ul>
+                      </div>
+                    </li>
+                    {localStorage.getItem("login") ?
+                      <li className="nav-item">
+                        <div className="dropdown">
+                          <a className="page-scroll" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {localStorage.getItem("name")}
+                          </a>
+                          <ul className="dropdown-menu">
+                            <li><Link className="text-dark" style={{ margin: "0" }} to="/profile">Profile</Link></li>
+                            <li><button className="btn" style={{ margin: "0", marginLeft: -6, fontWeight: 600, fontSize: 14 }} onClick={logout}>Logout</button></li>
+                          </ul>
+                        </div>
+                      </li> :
+                      <li className="nav-item"><NavLink className="page-scroll" to="/login">Login</NavLink></li>
+                    }
                   </ul>
                 </div>
 

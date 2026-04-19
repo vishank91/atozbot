@@ -25,7 +25,7 @@ export default function TermsAndConditionPage() {
                         <div className="row">
                             <div className="col-12">
                                 <div className="content">
-                                    <h6>Features</h6>
+                                    <h6>Our Policies</h6>
                                     <h2 className="fw-bold">Terms and Condition</h2>
                                     <p>Understand the rules, responsibilities, and guidelines for using AtoZBot services, ensuring a safe and transparent user experience 📄</p>
                                 </div>

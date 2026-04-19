@@ -24,6 +24,9 @@ import FaqPage from './Pages/FaqPage'
 import ContactUsPage from './Pages/ContactUsPage'
 import PrivacyPolicyPage from './Pages/PrivacyPolicyPage'
 import TermsAndConditionPage from './Pages/TermsAndConditionPage'
+import SignupPage from './Pages/User/SignupPage'
+import LoginPage from './Pages/User/LoginPage'
+import ProfilePage from './Pages/User/ProfilePage'
 
 
 export default function App() {
@@ -39,6 +42,13 @@ export default function App() {
         <Route path='contactus' element={<ContactUsPage />} />
         <Route path='privacy' element={<PrivacyPolicyPage />} />
         <Route path='tc' element={<TermsAndConditionPage />} />
+
+        <Route path='/signup' element={<SignupPage />} />
+        <Route path='/login' element={<LoginPage />} />
+
+        {/* User Routes */}
+        <Route path='/profile' element={<ProfilePage />} />
+
 
         {/* Admin Routes */}
         <Route path='/admin' element={<AdminHomePage />} />

@@ -25,7 +25,7 @@ export default function PrivacyPolicyPage() {
                         <div className="row">
                             <div className="col-12">
                                 <div className="content">
-                                    <h6>Features</h6>
+                                    <h6>Our Policies</h6>
                                     <h2 className="fw-bold">Privacy Policies</h2>
                                     <p>Learn how AtoZBot collects, uses, and protects your data while ensuring privacy, transparency, and secure AI-powered experiences 🔒</p>
                                 </div>
