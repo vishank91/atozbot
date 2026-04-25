@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import Pricing from '../../Components/Pricing'
 
 export default function ProfilePage() {
     let [data, setData] = useState([])
@@ -63,9 +64,15 @@ export default function ProfilePage() {
                                 <th>Role</th>
                                 <td>{data.role}</td>
                             </tr>
+                            <tr>
+                                <th>Plan</th>
+                                <td>{data.plan?data.plan?.name:"No Plan"}</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
+
+                <Pricing/>
             </section>
         </>
     )

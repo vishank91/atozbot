@@ -27,6 +27,8 @@ import TermsAndConditionPage from './Pages/TermsAndConditionPage'
 import SignupPage from './Pages/User/SignupPage'
 import LoginPage from './Pages/User/LoginPage'
 import ProfilePage from './Pages/User/ProfilePage'
+import Payment from './Pages/User/Payment'
+import OrderConfirmation from './Pages/User/OrderConfirmation'
 
 
 export default function App() {
@@ -48,6 +50,8 @@ export default function App() {
 
         {/* User Routes */}
         <Route path='/profile' element={<ProfilePage />} />
+        <Route path='/payment/:_id' element={<Payment />} />
+        <Route path='/order-confirmation' element={<OrderConfirmation />} />
 
 
         {/* Admin Routes */}

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 
 export default function Pricing() {
     let [data, setData] = useState([])
@@ -46,9 +47,9 @@ export default function Pricing() {
                             </div>
 
                             <div className="light-rounded-buttons">
-                                <a href="javascript:void(0)" className="btn primary-btn-outline">
+                                <Link to={`/payment/${item._id}`} className="btn primary-btn-outline">
                                     Upgrate
-                                </a>
+                                </Link>
                             </div>
 
                             <div className="table-content">
