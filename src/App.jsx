@@ -29,6 +29,7 @@ import LoginPage from './Pages/User/LoginPage'
 import ProfilePage from './Pages/User/ProfilePage'
 import Payment from './Pages/User/Payment'
 import OrderConfirmation from './Pages/User/OrderConfirmation'
+import TextToText from './Pages/Generate/TextToText'
 
 
 export default function App() {
@@ -52,6 +53,8 @@ export default function App() {
         <Route path='/profile' element={<ProfilePage />} />
         <Route path='/payment/:_id' element={<Payment />} />
         <Route path='/order-confirmation' element={<OrderConfirmation />} />
+
+        <Route path='/text' element={<TextToText />} />
 
 
         {/* Admin Routes */}

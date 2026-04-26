@@ -17,7 +17,7 @@
 
         // show or hide the back-top-top button
         var backToTo = document.querySelector(".scroll-top");
-        if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+        if ((document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) && (!["/text", "/image", "/video", "/music", "/speech"].includes(location.pathname))) {
             backToTo.style.display = "flex";
         } else {
             backToTo.style.display = "none";
