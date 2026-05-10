@@ -1,14 +1,34 @@
 import React, { useState } from 'react'
+import ReactMarkdown from 'react-markdown'
 
 export default function TextToText() {
     let [input, setInput] = useState("")
-    let [chat, setChat] = useState([])
+    let [chat, setChat] = useState({
+        user: "",
+        _id: "",
+        chats: []
+    })
 
-    function postData(e) {
+    async function postData(e) {
         e.preventDefault()
-        chat.push({ type: "Send", message: input })
-        chat.push({ type: "Receive", message: "                Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsum distinctio, cupiditate nisi maiores ipsa eum fugiat delectus consequuntur saepe illum praesentium corporis nemo esse minima assumenda libero id sit vitae magni hic ad, repellat exercitationem? Delectus quaerat vel quas esse, neque, harum ipsum explicabo iure reiciendis nulla mollitia officia facere dolorem vitae! Veniam, culpa incidunt iste ea voluptates nulla pariatur cum aliquam voluptate architecto minima delectus corrupti blanditiis ipsam exercitationem in dolor tempore asperiores nesciunt assumenda harum alias? Aliquid tempore molestias aperiam exercitationem ut laboriosam neque magnam, corrupti aliquam doloribus debitis sint facilis architecto fuga. Quibusdam in ullam quod reprehenderit?" })
-        setChat(chat)
+        let response = await fetch(`${import.meta.env.VITE_APP_BACKEND_SERVER}/text`, {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify({
+                userid: localStorage.getItem("userid"),
+                input: input,
+                _id: chat._id ?? ""
+            })
+        })
+        response = await response.json()
+        let data = {
+            user: localStorage.getItem("userid"),
+            _id: response.chat?._id,
+            chats: response.chat?.chats
+        }
+        setChat({ ...data })
         setInput("")
     }
     return (
@@ -53,9 +73,13 @@ export default function TextToText() {
                     </div>
                     <div className="col-lg-9 border border-3">
                         <div className="first">
-                           {chat.map((item,index)=>{
-                            return  <div className={`alert alert-primary ${item.type==="Send"?'right':'left'}`}>{item.message}</div>
-                           })}
+                            {chat.chats?.map((item, index) => {
+                                return <div key={index} className={`alert alert-primary ${item.type === "Request" ? 'right' : 'left'}`}>
+                                    <ReactMarkdown>
+                                        {item.data}
+                                    </ReactMarkdown>
+                                </div>
+                            })}
                         </div>
                         <div className="second">
                             <div className="row">
