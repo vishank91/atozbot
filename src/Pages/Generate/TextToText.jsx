@@ -158,7 +158,7 @@ export default function TextToText() {
         (async () => {
             try {
                 const response = await fetch(
-                    `${import.meta.env.VITE_APP_BACKEND_SERVER}/text`,
+                    `${import.meta.env.VITE_APP_BACKEND_SERVER}/text/user/${localStorage.getItem("userid")}`,
                     {
                         method: "GET",
                         headers: {
