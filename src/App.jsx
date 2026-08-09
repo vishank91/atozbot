@@ -30,6 +30,7 @@ import ProfilePage from './Pages/User/ProfilePage'
 import Payment from './Pages/User/Payment'
 import OrderConfirmation from './Pages/User/OrderConfirmation'
 import TextToText from './Pages/Generate/TextToText'
+import TextToImage from './Pages/Generate/TextToImage'
 
 
 export default function App() {
@@ -55,6 +56,7 @@ export default function App() {
         <Route path='/order-confirmation' element={<OrderConfirmation />} />
 
         <Route path='/text' element={<TextToText />} />
+        <Route path='/image' element={<TextToImage />} />
 
 
         {/* Admin Routes */}
