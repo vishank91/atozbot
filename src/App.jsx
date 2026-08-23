@@ -31,6 +31,7 @@ import Payment from './Pages/User/Payment'
 import OrderConfirmation from './Pages/User/OrderConfirmation'
 import TextToText from './Pages/Generate/TextToText'
 import TextToImage from './Pages/Generate/TextToImage'
+import TextToVideo from './Pages/Generate/TexttoVideo'
 
 
 export default function App() {
@@ -57,6 +58,7 @@ export default function App() {
 
         <Route path='/text' element={<TextToText />} />
         <Route path='/image' element={<TextToImage />} />
+        <Route path='/video' element={<TextToVideo />} />
 
 
         {/* Admin Routes */}

@@ -6,6 +6,7 @@ export default function TextToImage() {
         prompt: "",
         ratio: "1:1"
     })
+    let [show, setShow] = useState(false)
     let [data, setData] = useState([])
 
     async function handleDownload(index) {
@@ -65,6 +66,7 @@ export default function TextToImage() {
 
     async function postData(e) {
         e.preventDefault();
+        setShow(true)
         let response = await fetch(
             `${import.meta.env.VITE_APP_BACKEND_SERVER}/image`,
             {
@@ -75,12 +77,23 @@ export default function TextToImage() {
                 body: JSON.stringify({ ...inputData, user: localStorage.getItem("userid") })
             },
         );
+        setInputData({
+            prompt: "",
+            ratio: "1:1"
+        })
         response = await response.json();
-        if (response.status === "Done") {
-            setData({ ...data, ...response.data })
+        if (response.result === "Done") {
+            setData(prev => [
+                response.data,
+                ...prev
+            ]);
+            setShow(false)
         }
         else {
-            console.log(response)
+            alert(
+                response.message ||
+                "Image generation failed"
+            );
         }
     }
 
@@ -107,44 +120,47 @@ export default function TextToImage() {
     }, [])
 
     return (
-        <div className="container chat-section">
-            <form onSubmit={postData}>
-                <div className="row my-2">
-                    <div className="col-10">
-                        <label>Prompt</label>
-                        <textarea name="prompt" onChange={e => setInputData({ ...inputData, prompt: e.target.value })} rows={5} placeholder='Enter Your Prompt to Create an Image' className='form-control border-primary'></textarea>
-                    </div>
-                    <div className="col-2">
-                        <div className="mb-3">
-                            <label>Ratio</label>
-                            <select name="ratio" onChange={e => setInputData({ ...inputData, ratio: e.target.value })} className='form-select border-primary'>
-                                <option>1:1</option>
-                                <option>16:9</option>
-                                <option>9:16</option>
-                                <option>3:2</option>
-                                <option>2:3</option>
-                            </select>
+        <>
+            <div style={{ height: 50 }}></div>
+            <div className="container my-5">
+                <form onSubmit={postData} className='mt-5'>
+                    <div className="row my-2">
+                        <div className="col-10">
+                            <label>Prompt</label>
+                            <textarea name="prompt" value={inputData.prompt} onChange={e => setInputData({ ...inputData, prompt: e.target.value })} rows={5} placeholder='Enter Your Prompt to Create an Image' className='form-control border-primary'></textarea>
                         </div>
-                        <button className='btn btn-primary w-100'>Submit</button>
+                        <div className="col-2">
+                            <div className="mb-3">
+                                <label>Ratio</label>
+                                <select name="ratio" onChange={e => setInputData({ ...inputData, ratio: e.target.value })} className='form-select border-primary'>
+                                    <option>1:1</option>
+                                    <option>16:9</option>
+                                    <option>9:16</option>
+                                    <option>3:2</option>
+                                    <option>2:3</option>
+                                </select>
+                            </div>
+                            {show ? <p>Please Wait....</p> : <button className='btn btn-primary w-100'>Submit</button>}
+                        </div>
                     </div>
-                </div>
-            </form>
+                </form>
 
-            <div className="row my-5">
-                {data.map((item, index) => {
-                    return <div key={index} className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
-                        <div className="card border-primary border-5 p-3">
-                            <Link to={item.image} target="_blank">
-                                <img src={item.image} className='w-100 h-100' alt='AI Generated Image' />
-                            </Link>
-                            <div className="btn-group">
-                                <button className='btn btn-primary' onClick={() => handleDownload(index)}><i className='bi bi-download'></i></button>
-                                <button className='btn btn-danger' onClick={() => deleteRecord(item._id)}><i className='bi bi-trash'></i></button>
+                <div className="row my-5">
+                    {data.map((item, index) => {
+                        return <div key={index} className="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                            <div className="card border-primary border-5 p-3">
+                                <Link to={item.image} target="_blank">
+                                    <img src={item.image} className='w-100 h-100' alt='AI Generated Image' />
+                                </Link>
+                                <div className="btn-group">
+                                    <button className='btn btn-primary' onClick={() => handleDownload(index)}><i className='bi bi-download'></i></button>
+                                    <button className='btn btn-danger' onClick={() => deleteRecord(item._id)}><i className='bi bi-trash'></i></button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                })}
+                    })}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
